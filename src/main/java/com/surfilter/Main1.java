@@ -46,7 +46,7 @@ public class Main1 {
             Config config = new Config();
 
             if (args.length>0){
-                config.setNumWorkers(21);
+                config.setNumWorkers(Integer.parseInt(args[1]));
                 config.setMaxSpoutPending(5000);
                 StormSubmitter.submitTopology(args[0], config, builder.createTopology());
             }else {
