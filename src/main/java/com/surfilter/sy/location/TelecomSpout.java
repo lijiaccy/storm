@@ -42,6 +42,7 @@ private static final Logger logger =   Logger.getLogger(TelecomSpout.class);
         logger.info("开始读取hdfs数据");
         FileSystem fs = null;
         Configuration config = new Configuration();
+        config.setBoolean("fs.hdfs.impl.disable.cache", true);
         try {
             fs = FileSystem.get(new URI(uri), config);
             ArrayList<Path> list = HUtil.listFilesByModificationTime(fs, new Path(uri+des), set);

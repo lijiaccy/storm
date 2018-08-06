@@ -42,22 +42,23 @@ private static final Logger logger =   Logger.getLogger(UnicomSpout.class);
         FileSystem fs = null;
         logger.info("开始读取hdfs数据");
         Configuration config = new Configuration();
+        config.setBoolean("fs.hdfs.impl.disable.cache", true);
         try {
             fs = FileSystem.get(new URI(uri), config);
-            long end = System.currentTimeMillis();
-            long start = end - 10;
             ArrayList<Path> list = HUtil.listFilesByModificationTime(fs, new Path(uri+des), set);
             logger.info("hdfs中有"+list.size()+"条数据");
-            for (Path p : list) {
-                String s = p.getName();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(new Path(uri+des+s))));
-                String data = null;
-                while ((data = reader.readLine())!=null){
-                    collector.emit(new Values(data),data);
+            if (list.size()>0){
+                for (Path p : list) {
+                    String s = p.getName();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(new Path(uri+des+s))));
+                    String data = null;
+                    while ((data = reader.readLine())!=null){
+                        collector.emit(new Values(data),data);
+                    }
+                    fs.deleteOnExit(new Path(uri+des+s));
+                    set.remove(s);
+                    System.out.println("删除hdfs中的文件"+uri+des+s+"成功");
                 }
-                fs.deleteOnExit(new Path(uri+des+s));
-                set.remove(s);
-                System.out.println("开始删除hdfs中的文件"+uri+des+s);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -41,6 +41,7 @@ private static final Logger logger =   Logger.getLogger(MobileSpout.class);
         FileSystem fs = null;
         logger.info("开始读取hdfs数据");
         Configuration config = new Configuration();
+        config.setBoolean("fs.hdfs.impl.disable.cache", true);
         try {
             fs = FileSystem.get(new URI(uri), config);
             ArrayList<Path> list = HUtil.listFilesByModificationTime(fs, new Path(uri+des), set);
