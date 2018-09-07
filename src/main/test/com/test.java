@@ -30,6 +30,8 @@ public class test {
         // 计算耗时
         System.out.println("Query " + map.size()+ " pairs takes " + (end - start) + " millis");
         redis.close();
+
+
     }
     
 }

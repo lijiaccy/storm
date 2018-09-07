@@ -31,6 +31,7 @@ private static final Logger logger =   Logger.getLogger(MobileBolt3.class);
         ConcurrentMap map = new ConcurrentHashMap();
         public void execute(Tuple tuple) {
             if (tuple.getSourceComponent().equals(Constants.SYSTEM_COMPONENT_ID) && tuple.getSourceStreamId().equals(Constants.SYSTEM_TICK_STREAM_ID)) {
+                System.out.println(1111111111);
                 if (map.isEmpty()){
                 }else {
                     logger.info("开始存入redis");
@@ -38,6 +39,7 @@ private static final Logger logger =   Logger.getLogger(MobileBolt3.class);
                     logger.info("存入redis结束");
                     map.clear();
                 }
+
             }else {
                 logger.info("存入map");
                 long start = System.currentTimeMillis();

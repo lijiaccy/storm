@@ -52,7 +52,7 @@ private static final Logger logger =   Logger.getLogger(TelecomSpout.class);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(new Path(uri+des+s))));
                 String data = null;
                 while ((data = reader.readLine())!=null){
-                    collector.emit(new Values(data),data);
+                    collector.emit(new Values(data));
                 }
                 System.out.println("开始删除hdfs中的文件"+uri+des+s);
                 fs.deleteOnExit(new Path(uri+des+s));

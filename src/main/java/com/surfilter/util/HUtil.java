@@ -1,11 +1,9 @@
 package com.surfilter.util;
 
 import io.netty.util.internal.ConcurrentSet;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.LocatedFileStatus;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.RemoteIterator;
+import org.apache.hadoop.fs.*;
 import org.apache.storm.hdfs.common.ModifTimeComparator;
 
 import java.io.FileNotFoundException;
@@ -43,7 +41,17 @@ public class HUtil {
         return result1;
     }
 
-
+    public static void createNewHDFSFile(String newFile, String content) throws IOException {
+        if (StringUtils.isBlank(newFile) || null == content) {
+            return;
+        }
+        Configuration config = new Configuration();
+        FileSystem hdfs = FileSystem.get(URI.create(newFile), config);
+        FSDataOutputStream os = hdfs.create(new Path(newFile));
+        os.write(content.getBytes("UTF-8"));
+        os.close();
+        hdfs.close();
+    }
 
     public static void deleteFromHdfs(String dst) throws FileNotFoundException,IOException {
         Configuration conf = new Configuration();

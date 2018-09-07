@@ -53,7 +53,7 @@ private static final Logger logger =   Logger.getLogger(UnicomSpout.class);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(new Path(uri+des+s))));
                     String data = null;
                     while ((data = reader.readLine())!=null){
-                        collector.emit(new Values(data),data);
+                        collector.emit(new Values(data));
                     }
                     fs.deleteOnExit(new Path(uri+des+s));
                     set.remove(s);
@@ -76,8 +76,6 @@ private static final Logger logger =   Logger.getLogger(UnicomSpout.class);
 
     @Override
     public void fail(Object msgId) {
-        logger.info("失败数据："+msgId);
-        super.fail(msgId);
     }
 
     public void declareOutputFields(OutputFieldsDeclarer declarer) {

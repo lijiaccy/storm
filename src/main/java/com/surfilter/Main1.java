@@ -20,7 +20,8 @@ public class Main1 {
         try {
             //移动
             builder.setSpout("mobile",new MobileSpout());
-            builder.setBolt("MobileBolt1", new MobileBolt1()).shuffleGrouping("mobile");
+            builder.setBolt("MobileBolt3",new MobileBolt11()).shuffleGrouping("mobile");
+            /*builder.setBolt("MobileBolt1", new MobileBolt1()).shuffleGrouping("mobile");
             builder.setBolt("MobileBolt2", new MobileBolt2())//
                     //说明在石宏fieldsGrouping的时候，第二个参数就是制定按照那个一字段来进行分组
                     .fieldsGrouping("MobileBolt1", new Fields("word"));
@@ -41,7 +42,7 @@ public class Main1 {
                     //说明在石宏fieldsGrouping的时候，第二个参数就是制定按照那个一字段来进行分组
                     .fieldsGrouping("TelecomBolt1", new Fields("word"));
             builder.setBolt("TelecomBolt3",new TelecomBolt3()).shuffleGrouping("TelecomBolt2");
-
+*/
 
             Config config = new Config();
 
